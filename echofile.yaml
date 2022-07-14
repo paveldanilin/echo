@@ -1,0 +1,28 @@
+source:
+  my_nginx:
+    def: ./def/nginx.access.json
+    path: ./data/nginx/access.log
+    reader:
+      type: "tail"
+    filter:
+      script: ./filter.js
+    queue: 10000
+
+routing:
+  my_nginx:
+    - "console"
+    - "db"
+    - "tg"
+
+channel:
+  console:
+    type: "console"
+    transformer: ./transformer.js
+    template:
+      string: "INSERT INTO table VALUES({{datetime}}, {{ip}}, {{message}})"
+  db:
+    type: "database"
+  tg:
+    type: "telegram"
+    filter:
+      field: "severity:(ERROR|CRITICAL)"

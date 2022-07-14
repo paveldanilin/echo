@@ -1,0 +1,2 @@
+{"eventTime": 12345, "type": "normal", "message": "test message"}
+{"eventTime": 12355, "type": "extended", "message": "test message 2", "ignored_field": [1,2,3]}
